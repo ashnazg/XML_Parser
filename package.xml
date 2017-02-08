@@ -64,11 +64,8 @@ Furthermore its now possible to split the parser from the handler object, so you
    <file name="examples/xml_parser_simple2.php" role="doc" />
    <file name="examples/xml_parser_simple2.xml" role="doc" />
    <file name="examples/xml_parser_simple_handler.php" role="doc" />
-   <file name="tests/001.phpt" role="test" />
-   <file name="tests/002.phpt" role="test" />
-   <file name="tests/003.phpt" role="test" />
-   <file name="tests/004.phpt" role="test" />
-   <file name="tests/004b.phpt" role="test" />
+   <file name="tests/AbstractUnitTests.php" role="test" />
+   <file name="tests/UnitTests.php" role="test" />
    <file name="tests/005.phpt" role="test" />
    <file name="tests/bug-9328.phpt" role="test" />
    <file name="tests/bug-9328b.phpt" role="test" />
