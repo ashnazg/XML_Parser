@@ -3,55 +3,58 @@
 class UnitTests extends AbstractUnitTests
 {
 
-    public function testSimpleProcessingWithFakeParserUsingString()
-    {
-        $parser = new FakeParser();
-        $original = <<<EOF
+    private $goodXmlString =
+<<<EOF
 <?xml version='1.0' ?>
 <root>foo</root>
 EOF;
-        $parser->parseString($original, true);
-        $expected = <<<EOF
+
+    private $goodParseResult =
+<<<EOF
 <ROOT><![CDATA[foo]]></ROOT>
 
 EOF;
-        $this->assertEquals($expected, $parser->getBuffer());
+
+    public function testSimpleProcessingWithFakeParserUsingString()
+    {
+        $parser = new FakeParser();
+        $parser->parseString($this->goodXmlString, true);
+        $this->assertEquals($this->goodParseResult, $parser->getBuffer());
     }
 
     public function testSimpleProcessingWithFakeParserUsingFileName()
     {
-        $parser = new FakeParser();
-        $parser->setInputFile(__DIR__ . '/test2.xml');
-        $parser->parse();
-        $expected = <<<EOF
-<ROOT><![CDATA[foo]]></ROOT>
+        $fh = tmpfile();
+        $metadata = stream_get_meta_data($fh);
+        $filename = $metadata['uri'];
+        file_put_contents($filename, $this->goodXmlString);
 
-EOF;
-        $this->assertEquals($expected, $parser->getBuffer());
+        $parser = new FakeParser();
+        $parser->setInputFile($filename);
+        $parser->parse();
+        $this->assertEquals($this->goodParseResult, $parser->getBuffer());
     }
 
     public function testSimpleProcessingWithFakeParserUsingFileResource()
     {
+        $fh = tmpfile();
+        fwrite($fh, $this->goodXmlString, strlen($this->goodXmlString));
+        rewind($fh);
         $parser = new FakeParser();
-        $fp = fopen(__DIR__ . "/test3.xml", "r");
-        $parser->setInput($fp);
+        $parser->setInput($fh);
         $parser->parse();
-        $expected = <<<EOF
-<ROOT><![CDATA[foo]]></ROOT>
-
-EOF;
-        $this->assertEquals($expected, $parser->getBuffer());
+        $this->assertEquals($this->goodParseResult, $parser->getBuffer());
     }
 
     public function testSimpleProcessingWithFakeParserUsingBadString()
     {
         $parser = new FakeParser();
-        $original = <<<EOF
+        $badXml = <<<EOF
 <?xml version='1.0' ?>
 <root></bar>
 EOF;
         $expectedError = 'XML_Parser: Mismatched tag at XML input line 2:13';
-        $result = $parser->parseString($original, true);
+        $result = $parser->parseString($badXml, true);
         $this->assertInstanceOf('PEAR_Error', $result);
         $this->assertEquals($expectedError, $result->getMessage());
     }
