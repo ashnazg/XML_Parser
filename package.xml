@@ -67,12 +67,6 @@ Furthermore its now possible to split the parser from the handler object, so you
    <file name="tests/AbstractUnitTests.php" role="test" />
    <file name="tests/UnitTests.php" role="test" />
    <file name="tests/005.phpt" role="test" />
-   <file name="tests/bug-9328.phpt" role="test" />
-   <file name="tests/bug-9328b.phpt" role="test" />
-   <file name="tests/bug-9328c.phpt" role="test" />
-   <file name="tests/bug-9328d.phpt" role="test" />
-   <file name="tests/test2.xml" role="test" />
-   <file name="tests/test3.xml" role="test" />
   </dir>
  </contents>
  <dependencies>
