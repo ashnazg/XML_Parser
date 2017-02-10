@@ -51,6 +51,7 @@ Furthermore its now possible to split the parser from the handler object, so you
    <dir name="XML">
     <file name="Parser.php" role="php" />
     <dir name="Parser">
+     <file name="Error.php" role="php" />
      <file name="Simple.php" role="php" />
     </dir>
    </dir>
